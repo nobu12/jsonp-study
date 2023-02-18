@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+	function getJson(jsonUrl) {
+		$.ajax({
+			url: jsonUrl,
+			dataType: 'json'
+		}).done(function (json) {
+			alert(JSON.stringify(json));
+		}).fail(function () {
+			alert('getJson failed');
+		});
+	}
+	
+	function getJsonp(jsonUrl) {
+		$.ajax({
+			url: jsonUrl,
+			dataType: 'jsonp',
+			jsonpCallback: 'test',
+		}).done(function (json) {
+			alert(JSON.stringify(json));
+		}).fail(function () {
+			alert('getJsonp failed');
+		});
+	}
+</script>
+</head>
+<body>
+<button onclick="getJsonp('http://localhost:50001/sameorigin/api?callback=test')">パターン1 Same-Origin かつ JSONP使用</button>
+<br><br>
+<button onclick="getJson('http://localhost:50001/sameorigin/api')">パターン2 Same-Origin かつ JSONP不使用</button>
+<br><br>
+<button onclick="getJsonp('http://localhost:50002/crossorigin/api?callback=test')">パターン3 Cross-Origin かつ JSONP使用</button>
+<br><br>
+<button onclick="getJson('http://localhost:50002/crossorigin/api')">パターン4 Cross-Origin かつ JSONP不使用</button>
+</body>
+</html>
